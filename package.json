@@ -1,0 +1,20 @@
+{
+  "name": "GangBot",
+  "version": "0.1.0",
+  "description": "A gang bot for discord.js",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "discord.js": "^12.2.0",
+    "firebase-admin": "^8.12.1",
+    "dblapi.js": "^2.4.0",
+    "hastebin-gen": "^2.0.5"
+  },
+  "engines": {
+    "node": "12.x"
+  },
+  "license": "MIT"
+}
