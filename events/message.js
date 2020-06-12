@@ -29,6 +29,9 @@ module.exports = {
     if (command.dev && !config.devs.includes(message.author.id)) {
     return message.channel.send(":x: | You are not accesed to use this command!")
     }
+    if (command.admin && !config.admins.includes(message.author.id)) {
+    return message.channel.send(":x: | You are not accesed to use this command!")
+    }
     if (command.guildOnly && message.channel.type === 'dm') {
       return message.reply(':x: | This command cannot be executed in direct messages.');
     }

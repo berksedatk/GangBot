@@ -15,12 +15,9 @@ module.exports = {
     const mins = Math.floor((totalSeconds / 60) % 60);
 
     let pingEmbed = new Discord.MessageEmbed()
-      .setThumbnail(bot.user.avatarURL())
       .setColor("BLUE")
-      .setFooter("Requested by " + message.author.tag, message.author.avatarURL())
-      .setAuthor(bot.user.username, bot.user.avatarURL())
       .setTimestamp()
       .addField(`⏱️ Uptime`, `${days} days, ${hours} hours, ${mins} minutes, and ${realTotalSecs} seconds.`);
     msg.edit("", pingEmbed)
   }
-};
+}
