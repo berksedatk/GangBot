@@ -7,7 +7,7 @@ module.exports = {
   description: "The status of the bot.",
   aliases: ["stats"],
   cooldown: 5,
-  async execute(bot, message, args) {
+  async execute(bot, message) {
     const msg = await message.channel.send(`Just a moment...`);
 
     const totalSeconds = process.uptime();
