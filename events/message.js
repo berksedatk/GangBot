@@ -9,7 +9,7 @@ function prettyString(string) {
 }
 
 module.exports = {
-  async execute(bot, message, db, dbl) {
+  async execute(bot, message) {
     const prefixes = config.prefixes;
     let prefix = false;
     for (const thisPrefix of prefixes) {
@@ -71,7 +71,7 @@ module.exports = {
 
     //Executing
     try {
-      command.execute(bot, message, args, db, dbl);
+      command.execute(bot, message, args);
     } catch (err) {
       console.error(`Executing command error: ${err}`);
       message.channel.send(`Executing command error: ${err}`);

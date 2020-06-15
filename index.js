@@ -1,14 +1,7 @@
-//Firebase
-var admin = require("firebase-admin");
+//Database
 
-const serviceAccount = require("./.data/key.json");
-
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://memebot-9ac4e.firebaseio.com"
-});
-
-const db = admin.firestore();
+const mongoose = require('mongoose');
+mongoose.connect(process.env.DB_URL, {useNewUrlParser: true, useUnifiedTopology: true})
 
 //Discord
 const Discord = require('discord.js');
@@ -18,7 +11,7 @@ bot.commands = new Discord.Collection();
 bot.events = new Discord.Collection();
 
 ["commands", "events"].forEach(handler => {
-  require(`./util/handlers/${handler}`)(bot, db);
+  require(`./util/handlers/${handler}`)(bot);
 });
 
 bot.login(process.env.BOT_TOKEN);

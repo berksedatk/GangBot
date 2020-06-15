@@ -3,8 +3,6 @@ const Discord = require('discord.js');
 const config = require('../config.json');
 const hastebin = require('hastebin-gen');
 const { inspect } = require("util");
-const Guild = require("../schemas/guild.js");
-const mongoose = require("mongoose");
 
 module.exports = {
   name: 'eval',
@@ -13,7 +11,7 @@ module.exports = {
   aliases: ['eveal', 'execute'],
   usage: '<code>',
   dev: 'true',
-  async execute(bot, message, args, db) {
+  async execute(bot, message, args) {
 
     const msg = await message.channel.send(`Executing code...`);
     const code = args.join(" ");
