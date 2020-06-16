@@ -6,9 +6,9 @@ const guildSchema = new mongoose.Schema({
   guildID: String,
   settings: {
     createGang: {
-      type: "everyone",
-      role: null,
-      permission: null
+      allow: String,
+      role: String,
+      permission: String
     },
     blacklist: {
       enabled: false,
@@ -21,13 +21,13 @@ const guildSchema = new mongoose.Schema({
       name: String,
       admins: {},
       members: {},
-      color: "#999999",
-      description: "Hello, this is my Global Gang!",
-      gangPoints: 0,
-      banner: null,
+      color: String,
+      description: String,
+      gangPoints: Number,
+      banner: String,
     }
   },
-  gangs: {}
+  gangs: Map
 });
 
 module.exports = mongoose.model("guildSchema", guildSchema);
