@@ -5,7 +5,18 @@ mongoose.connect(process.env.DB_URL, {useNewUrlParser: true, useUnifiedTopology:
 
 //Discord
 const Discord = require('discord.js');
-const bot = new Discord.Client({ disableMentions: "everyone" });
+const bot = new Client({
+  disableMentions: "everyone",
+  messageCacheMaxSize: 35,
+  messageCacheLifetime: 30,
+  messageSweepInterval: 60
+}, {
+  partials: ['MESSAGE', 'CHANNEL']
+}, {
+  ws: {
+    intents: ['MESSAGE_CREATE']
+  }
+});
 
 bot.commands = new Discord.Collection();
 bot.events = new Discord.Collection();
