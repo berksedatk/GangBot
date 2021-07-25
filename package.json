@@ -1,0 +1,19 @@
+{
+  "name": "gangbot",
+  "version": "2.0.0",
+  "description": "A grouping bot made by Sax#6211.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Sax#6211",
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "^12.5.3",
+    "dotenv": "^8.6.0",
+    "hastebin-gen": "^2.0.5",
+    "mongoose": "^5.13.3",
+    "os-utils": "0.0.14",
+    "uuid": "^8.3.2"
+  }
+}
