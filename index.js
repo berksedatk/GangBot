@@ -15,7 +15,7 @@ const mongoose = require('mongoose');
 //// TEMP:
 var admin = require("firebase-admin");
 
-const serviceAccount = require("./.data/key.json");
+const serviceAccount = require("./yes.json");
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
