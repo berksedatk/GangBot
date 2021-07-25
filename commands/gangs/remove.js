@@ -10,21 +10,7 @@ module.exports = {
   guildOnly: true,
   execute(bot, message, args) {
     Guild.findOne({ guildID: message.guild.id }, async (err, guild) => {
-      let gang;
-      let user = guild.members.get(message.author.id)
-      if (!user) {
-        user = {
-          id: message.author.id,
-          tag: message.author.tag,
-          gang: {
-            name: "None",
-            rank: null,
-            joinDate: null
-          }
-        }
-        guild.members.set(message.author.id, user);
-        guild.save().catch(err => message.channel.send("An error occured: " + err));
-      }
+      let gang
       if (args[0]) {
         if (message.guild.owner.id != message.author.id && !message.member.permissions.has("ADMINISTRATOR") && user.gang.rank != "Owner") return message.error("You do not have permission to remove gangs. Only Administrators, Server Owner or Gang Owners can remove gangs.");
         gang = guild.gangs.get(args.join(" "));
