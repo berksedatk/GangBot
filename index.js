@@ -12,18 +12,6 @@ const mongoose = require('mongoose');
   });
 })();
 
-//// TEMP:
-var admin = require("firebase-admin");
-
-const serviceAccount = require("./yes.json");
-
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://memebot-9ac4e.firebaseio.com"
-});
-
-const db = admin.firestore();
-
 //Discord
 const { Client, Collection } = require("discord.js");
 const client = new Client({
