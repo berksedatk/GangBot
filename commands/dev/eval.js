@@ -4,9 +4,6 @@ const hastebin = require('hastebin-gen');
 const { inspect } = require("util");
 
 const Discord = require('discord.js');
-//// TEMP: 
-var admin = require("firebase-admin");
-const db = admin.firestore();
 
 module.exports = {
   name: 'eval',
