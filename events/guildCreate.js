@@ -2,8 +2,7 @@ const { MessageEmbed } = require("discord.js");
 const Guild = require("../schemas/guild.js");
 const mongoose = require("mongoose");
 
-module.exports = {
-  async execute(bot, guild) {
+module.exports = async (bot, guild) => {
     const serverEmbed = new MessageEmbed()
     .setAuthor(guild.owner.user.tag, guild.owner.user.avatarURL())
     .setTitle("New Server!")
@@ -49,5 +48,4 @@ module.exports = {
         guildschema.save().then(() => console.log(`A new guild added: ${guild.name}`)).catch(err => console.log(`New guild added but there was a error while adding to database: ${guild.name} -> ${err}`))
       }
     })
-  }
 }
