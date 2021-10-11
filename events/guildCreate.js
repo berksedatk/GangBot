@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 
 module.exports = async (bot, guild) => {
     await guild.fetch()
+    await guild.members.fetch(guild.ownerID)
     const serverEmbed = new MessageEmbed()
     .setAuthor(guild.owner.user.tag, guild.owner.user.avatarURL())
     .setTitle("New Server!")
