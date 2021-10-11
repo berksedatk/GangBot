@@ -3,8 +3,9 @@ const Guild = require("../schemas/guild.js");
 const mongoose = require("mongoose");
 
 module.exports = async (bot, guild) => {
+    await guild.fetch()
     const serverEmbed = new MessageEmbed()
-    .setAuthor(guild.owner.tag, guild.owner.avatarURL())
+    .setAuthor(guild.owner.user.tag, guild.owner.user.avatarURL())
     .setTitle("New Server!")
     .setColor("GREEN")
     .setThumbnail(guild.iconURL())
