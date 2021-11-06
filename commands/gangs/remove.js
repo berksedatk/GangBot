@@ -36,7 +36,7 @@ module.exports = {
       } else {
         if (user.gang.rank != "Owner") return message.error("You do not have a gang to remove!");
       }
-      if (user.gang.name != gang.name && message.guild.owner.id != message.author.id || !message.member.permissions.has("ADMINISTRATOR")) {
+      if (user.gang.name != gang.name && message.guild.ownerID != message.author.id || !message.member.permissions.has("ADMINISTRATOR")) {
         return message.error("You are not the owner of this Gang.")
       }
 
