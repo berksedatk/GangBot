@@ -10,8 +10,8 @@ module.exports = {
   guildOnly: true,
   execute(bot, message, args) {
     Guild.findOne({ guildID: message.guild.id }, async (err, guild) => {
-      let gang;
       let user = guild.members.get(message.author.id)
+      let gang = guild.gangs.get(user.gang.name);
       if (!user) {
           user = {
             id: message.author.id,
@@ -23,10 +23,12 @@ module.exports = {
               joinDate: null
             }
           }
+          gang = { name: null }
           guild.members.set(message.author.id, user);
           guild.save()
           if (message.guild.ownerID != message.author.id) return message.error("You dont own a Gang!");
       }
+      
       if (args[0]) {
         if (message.guild.ownerID != message.author.id && !message.member.permissions.has("ADMINISTRATOR") && user.gang.rank != "Owner") return message.error("You do not have permission to remove gangs. Only Administrators, Server Owner or Gang Owners can remove gangs.");
         gang = guild.gangs.get(args.join(" "));
