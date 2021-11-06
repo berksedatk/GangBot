@@ -33,7 +33,7 @@ module.exports = {
         if (message.guild.ownerID != message.author.id && !message.member.permissions.has("ADMINISTRATOR") && user.gang.rank != "Owner") return message.error("You do not have permission to remove gangs. Only Administrators, Server Owner or Gang Owners can remove gangs.");
         gang = guild.gangs.get(args.join(" "));
         if (!gang) return message.error("This gang does not exist! Use the `g?list` command to see all gangs.");
-        if (message.author.id != gang.owner.id) return message.error("You are not the owner of this gang.)
+        if (message.author.id != gang.owner.id) return message.error("You are not the owner of this gang.")
       } else {
         if (user.gang.rank != "Owner") return message.error("You cannot remove a gang, you must be a Owner of the gang or a Server Admin to do it so.");
       }
