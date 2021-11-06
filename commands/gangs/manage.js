@@ -171,9 +171,10 @@ module.exports = {
             default:
               return message.error("You didn't provide a option. `name, description, color, flag, setadmin, removeadmin, kick, transferownership`");
           }
-          guild.save().then("Changes have been saved successfully on the database.").catch(err => message.channel.send("An error occured: " + err));
+          
         }
       }
+      guild.save().then("Changes have been saved successfully on the database.").catch(err => message.channel.send("An error occured: " + err));
     });
   }
 };
