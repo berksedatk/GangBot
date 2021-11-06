@@ -32,6 +32,7 @@ module.exports = {
             }
           }
           guild.members.set(message.author.id, user);
+          guild.save()
           return message.error("You dont own or moderate a Gang!");
         } else if (user.gang.rank != "Owner" && user.gang.rank != "Admin") {
           return message.error("You can't manage the Gang you're in or you're not in a Gang!");
@@ -58,7 +59,7 @@ module.exports = {
               user.gang.name = args[1];
               guild.markModified('gangs');
               guild.markModified('users');
-              message.success(`Gang name has been updated to **${args[1]}** successfully.`)
+              guild.save().then(() => message.success(`Gang name has been updated to **${args[1]}** successfully.`)).catch(err => message.channel.send("An error occured: " + err))
               break;
             case "description":
               args.shift();
@@ -66,16 +67,16 @@ module.exports = {
               if (desc.length == 0 || desc.length > 4000) return message.error("The gang description should be between 0 and 4000 characters.");
               gang.description = desc;
               guild.markModified('gangs');
-              message.success(`Gang description has been updated successfully.`)
+              guild.save().then(() => message.success(`Gang description has been updated successfully.`)).catch(err => message.channel.send("An error occured: " + err))
               break;
             case "color":
               if (!args[1]) return message.error("You didn't provide a hex color for the guild.");
               if (!w3color(args[1]).valid) return message.error("This is not a valid color. Please provide a hex color for the guild.");
               gang.color = args[1];
               guild.markModified('gangs');
-              message.success(`Gang color has been updated to **${args[1]}** successfully.`)
-                break;
-              case "banner":
+              guild.save().then(() => message.success(`Gang color has been updated to **${args[1]}** successfully.`)).catch(err => message.channel.send("An error occured: " + err))
+              break;
+            case "banner":
               if (args[1]) {
                 if (args[1].toLowerCase() == 'clear') {
                   gang.banner = null;
@@ -86,7 +87,7 @@ module.exports = {
                 if (message.attachments.size = 0) return message.error(`You didn't provide a image for the guild, please attach a image with your message. If you wish to remove your banner please use \`${message.prefix}manage banner clear\` command.`);
                 gang.banner = message.attachments.first().proxyURL;
                 guild.markModified('gangs');
-                message.success(`Gang banner has been updated to the image you attached successfully.`)
+                guild.save(() => message.success(`Gang banner has been updated to the image you attached successfully.`)).catch(err => message.channel.send("An error occured: " + err))
               }
               break;
             case "setadmin":
@@ -107,7 +108,7 @@ module.exports = {
               }
               usera.gang.rank = "Admin";
               guild.markModified('users');
-              message.success(`User has been set as a Admin successfully.`)
+              guild.save().then(() => message.success(`User has been set as a Admin successfully.`)).catch(err => message.channel.send("An error occured: " + err))
               break;
             case "removeadmin":
               if (user.gang.rank != "Owner") return message.error("Only Owner of the gang can manage this.");
@@ -119,7 +120,7 @@ module.exports = {
               if (!adminlist.includes(message.mentions.users.first().id)) return message.error("This user is not an Admin.");
               adminlist.indexOf(message.mentions.users.first().id) > -1 ? adminlist.splice(admins.indexOf(message.mentions.users.first().id), 1) : null;
               guild.markModified('users');
-              message.success(`User has been removed from Admins successfully.`)
+              guild.save().then(() => message.success(`User has been removed from Admins successfully.`)).catch(err => message.channel.send("An error occured: " + err))
               break;
             case "kick":
               if (user.gang.rank != "Owner" && user.gang.rank != "Admin") return message.error("Only Owner or Admin of the Gang can manage this.");
@@ -137,7 +138,8 @@ module.exports = {
                 joinDate: null
               }
               guild.markModified('users');
-              message.success(`User has been kicked from the Gang successfully.`)
+              guild.save().then(() => message.success(`User has been kicked from the Gang successfully.`)).catch(err => message.channel.send("An error occured: " + err));
+              
               break;
             case "transferownership":
               if (user.gang.rank != "Owner") return message.error("Only Owner of the gang can manage this.");
@@ -161,7 +163,7 @@ module.exports = {
                     guild.markModified('users');
                     guild.markModified('gangs');
                     console.log(gang)
-                    message.success("The gang has been successfully transferred.")
+                    guild.save().then(()=> message.success("The gang has been successfully transferred.")).catch(err => message.channel.send("An error occured: " + err));
                   } else {
                     return message.error("Command cancelled.");
                   }
@@ -174,7 +176,6 @@ module.exports = {
           
         }
       }
-      guild.save().then("Changes have been saved successfully on the database.").catch(err => message.channel.send("An error occured: " + err));
-    });
+          });
   }
 };
