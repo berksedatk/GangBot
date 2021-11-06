@@ -12,7 +12,7 @@ module.exports = {
     Guild.findOne({ guildID: message.guild.id }, async (err, guild) => {
       let gang
       if (args[0]) {
-        if (message.guild.owner.id != message.author.id && !message.member.permissions.has("ADMINISTRATOR") && user.gang.rank != "Owner") return message.error("You do not have permission to remove gangs. Only Administrators, Server Owner or Gang Owners can remove gangs.");
+        if (message.guild.ownerID != message.author.id && !message.member.permissions.has("ADMINISTRATOR") && user.gang.rank != "Owner") return message.error("You do not have permission to remove gangs. Only Administrators, Server Owner or Gang Owners can remove gangs.");
         gang = guild.gangs.get(args.join(" "));
         if (!gang) return message.error("This gang does not exist! Use the `g?list` command to see all gangs.");
       } else {
