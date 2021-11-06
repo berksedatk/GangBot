@@ -12,7 +12,7 @@ module.exports = {
     Guild.findOne({ guildID: message.guild.id }, async (err, guild) => {
       let gang;
       let user = guild.members.get(message.author.id)
-      if (!user && message.guild.ownerID != message.author.id) {
+      if (!user) {
           user = {
             id: message.author.id,
             tag: message.author.tag,
@@ -24,18 +24,8 @@ module.exports = {
             }
           }
           guild.members.set(message.author.id, user);
-          return message.error("You dont own a Gang!");
-      } else if (message.guild.ownerID == message.author.id) {
-      user = {
-            id: message.author.id,
-            tag: message.author.tag,
-            gang: {
-              uuid: '',
-              name: "None",
-              rank: null,
-              joinDate: null
-            }
-          }
+          guild.save()
+          if (message.guild.ownerID != message.author.id) return message.error("You dont own a Gang!");
       }
       if (args[0]) {
         if (message.guild.ownerID != message.author.id && !message.member.permissions.has("ADMINISTRATOR") && user.gang.rank != "Owner") return message.error("You do not have permission to remove gangs. Only Administrators, Server Owner or Gang Owners can remove gangs.");
