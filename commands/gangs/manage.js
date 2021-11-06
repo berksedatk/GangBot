@@ -148,7 +148,7 @@ module.exports = {
               } else if (userc.gang.uuid != guild.gangs.get(user.gang.name).uuid) {
                 return message.error("This user is not in your Gang.");
               } else {
-                let confirm = await message.channel.send(`<:warning:724052384031965284> | Do you really wish to transfer **${gang.name}** to ${message.guild.members.get(userc.id).tag}? (yes/no)`);
+                let confirm = await message.channel.send(`<:warning:724052384031965284> | Do you really wish to transfer **${gang.name}** to ${userc.tag}? (yes/no)`);
                 confirm.channel.awaitMessages(m => m.author.id == message.author.id, {max: 1, time: 60000, errors: ['time']}).then(async c => {
                   if (c.first().content.toLowerCase() == "yes" || c.first().content.toLowerCase() == "y") {
                     gang.owner = {
@@ -160,6 +160,7 @@ module.exports = {
                     user.gang.rank = "Member";
                     guild.markModified('users');
                     guild.markModified('gangs');
+                    console.log(gang)
                     message.success("The gang has been successfully transferred.")
                   } else {
                     return message.error("Command cancelled.");
