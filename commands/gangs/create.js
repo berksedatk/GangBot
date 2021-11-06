@@ -243,7 +243,7 @@ module.exports = {
           })
         } else if (guild.settings.create.allow == "owner") {
           //Owner
-          if (message.guild.owner.id != message.author.id) return message.error("Only server owner can create gangs.")
+          if (message.guild.ownerID != message.author.id) return message.error("Only server owner can create gangs.")
 
           let collector = message.channel.createMessageCollector(m => m.author.id === message.author.id, { time: 600000 })
           let msg = await message.channel.send("Gang creator started! What should be the gang's name? (case sensitive)\nType in `cancel` to exit the creator.");
