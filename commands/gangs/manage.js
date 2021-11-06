@@ -145,10 +145,10 @@ module.exports = {
               let userc = guild.members.get(message.mentions.users.first().id);
               if (userc.gang.rank == "Owner") {
                 return message.error("This user is already a Gang owner");
-              } else if (usera.gang.uuid != guild.gangs.get(user.gang.name).uuid) {
+              } else if (userc.gang.uuid != guild.gangs.get(user.gang.name).uuid) {
                 return message.error("This user is not in your Gang.");
               } else {
-                let confirm = await message.channel.send(`<:warning:724052384031965284> | Do you really wish to transfer **${gang.name}** to ${usera}? (yes/no)`);
+                let confirm = await message.channel.send(`<:warning:724052384031965284> | Do you really wish to transfer **${gang.name}** to ${userc}? (yes/no)`);
                 confirm.channel.awaitMessages(m => m.author.id == message.author.id, {max: 1, time: 60000, errors: ['time']}).then(async c => {
                   if (c.first().content.toLowerCase() == "yes" || c.first().content.toLowerCase() == "y") {
                     gang.owner = {
