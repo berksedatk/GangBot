@@ -23,6 +23,7 @@ module.exports = async (bot, guild) => {
           _id: mongoose.Types.ObjectId(),
           guildName: guild.name,
           guildID: guild.id,
+          members: {},
           settings: {
             createGang: {
               allow: "everyone",
