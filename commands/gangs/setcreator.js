@@ -14,10 +14,8 @@ module.exports = {
       if (err) return message.channel.send("An error occured: " + err);
       if (!guild) return message.channel.send("Database does not exist! Please contract a dev.");
       if (guild) {
+        if (!args[0]) return message.error("You didn't provide a option to set as usability.", true, `<everyone/roles/owner>`);
         switch (args[0].toLowerCase()) {
-          case undefined:
-          return message.error("You didn't provide a option to set as usability.", true, `<everyone/roles/owner>`);
-            break;
           case "everyone":
           guild.settings.create.allow = 'everyone';
           guild.save().then(() => message.success("Gang creator usability is successfull set for everyone to use.")).catch(err => console.log('An error occured: ' + err));
@@ -34,6 +32,9 @@ module.exports = {
           message.mentions.roles.forEach(r => roles.push(r.id));
           guild.settings.create.roles = roles
           guild.save().then(() => message.success("Gang creator usability is successfull set for the roles you provided to use.")).catch(err => console.log('An error occured: ' + err));
+            break;
+          default:
+            return message.error("You didn't provide a option to set as usability.", true, `<everyone/roles/owner>`);
             break;
         }
       }
