@@ -25,7 +25,7 @@ module.exports = async (bot, guild) => {
           guildID: guild.id,
           members: {},
           settings: {
-            createGang: {
+            create: {
               allow: "everyone",
               roles: []
             },
