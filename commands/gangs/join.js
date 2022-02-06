@@ -30,7 +30,7 @@ module.exports = {
           }
         }
         guild.members.set(message.author.id, member);
-        if (gang.role) {
+        if (gang.role != "") {
           let gangRole = message.guild.roles.cache.get(gang.role);
           if (gangRole) {
             if (gangRole.position > message.guild.me.roles.highest.position) return message.error("Gang Role is higher than my current role, thus I could not asign the Gang Role to you.");

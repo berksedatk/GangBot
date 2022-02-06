@@ -105,8 +105,12 @@ module.exports = {
                   message.error("A role with this name already exist!.\nPlease try again or type in `cancel`.", true).then(m => m.delete({timeout: 5000}));
                 } else if (c.content || c.content.toLowerCase() == "skip") {
                   let role;
-                  c.content.toLowerCase() == "skip" ? newGang.role = null : role = message.guild.roles.create({ data: { name: c.content, color: newGang.color, hoist: true} })
-                  newGang.role = role ? role.id : null;
+                  if (c.content.toLowerCase() == "skip") {
+                    newGang.role = "";
+                  } else {
+                    role = await message.guild.roles.create({ data: { name: c.content, color: newGang.color, hoist: true} })
+                  }
+                  newGang.role = role ? role.id : "";
                   msg.delete().then(async () => msg = await message.channel.send(`Gang's role has been set! Your gang has been created! Your followers now can use the \`g?join ${newGang.name}\` command to join your gang.`))
                   collector.stop();
                   guild.gangs.set(newGang.name, newGang);

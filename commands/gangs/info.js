@@ -30,13 +30,15 @@ module.exports = {
         guild.markModified(`gangs`);
         guild.save()
         let owner = await message.guild.members.fetch(gang.owner.id);
+        let role = gang.role;
+        if (role != "") role = message.guild.roles.cache.get(role);
         let gangEmbed = new Discord.MessageEmbed()
         .setTitle(gang.name)
         .setDescription(gang.description)
         .setColor(gang.color)
         .setAuthor(owner ? owner.user.tag : gang.owner.tag, owner ? owner.user.avatarURL() : gang.owner.avatarURL)
         .addField("Admins", adminList.join(", ").length > 0 ? adminList.join(", ") : "No Admins", true)
-        .addField("Role", gang.role != "" ? `<@&${gang.role}>` : "No Gang Role")
+        .addField("Role", role != "" ? `<@&${role.id}>` : "No Gang Role")
         .addField(":busts_in_silhouette: Members", memberCount + adminList.length + 1, true)
         .addField(":military_medal: Gang Points", `${gang.points} points`, true)
         .setFooter(`UUID: ${gang.uuid}\nCreated at: ${new Date(gang.createdAt).toUTCString()}`)
