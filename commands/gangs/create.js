@@ -17,7 +17,7 @@ module.exports = {
       if (!guild) return message.error("Database does not exist! Please contract a dev.");
       if (guild) {
         let member = guild.members.get(message.author.id);
-        if (!member) {
+        if (member) {
           if (member.gang.uuid != "") return message.error("You are already in a gang!");
         }
         if (guild.settings.create.allow == "everyone") {
