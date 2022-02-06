@@ -101,7 +101,7 @@ module.exports = {
                 if (role.position > message.guild.me.roles.highest.position) return message.error("The role you provided is higher than my highest role.");
                 gang.role = role.id;
                 guild.markModified('gangs');
-                guild.save().then(() => message.success(`Gang role has been updated to **${gangRole.name}** successfully.`)).catch(err => message.channel.send("An error occured: " + err));
+                guild.save().then(() => message.success(`Gang role has been updated to **${role.name}** successfully.`)).catch(err => message.channel.send("An error occured: " + err));
               }
               break;
             case "setadmin":
