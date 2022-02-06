@@ -90,7 +90,7 @@ module.exports = {
                   message.error("You must attach a image with your message.\nPlease try again or type in \`skip\` to skip. Type in `cancel` to cancel.", true).then(m => m.delete({timeout: 5000}))
                 } else if (c.attachments.first() || c.content.toLowerCase() == "skip") {
                   newGang.banner = c.attachments.first() ? c.attachments.first().url : null
-                  msg.delete().then(async () => msg = await message.channel.send(`Gang's banner is now set. What should be the role of this gang?\nType in \`cancel\` anytime to exit the creator.`));
+                  msg.delete().then(async () => msg = await message.channel.send(`Gang's banner is now set. What should be the role of this gang? Please type in the role's name that will be created or type in \`skip\`.\nType in \`cancel\` anytime to exit the creator.`));
                 }
               break;
               case 5:
@@ -105,7 +105,7 @@ module.exports = {
                   message.error("A role with this name already exist!.\nPlease try again or type in `cancel`.", true).then(m => m.delete({timeout: 5000}));
                 } else if (c.content || c.content.toLowerCase() == "skip") {
                   let role;
-                  c.content.toLowerCase() == "skip" ? newGang.role = null : role = new message.guild.roles.create({ data: { name: c.content, color: newGang.color, hoist: true} })
+                  c.content.toLowerCase() == "skip" ? newGang.role = null : role = message.guild.roles.create({ data: { name: c.content, color: newGang.color, hoist: true} })
                   newGang.role = role ? role.id : null;
                   msg.delete().then(async () => msg = await message.channel.send(`Gang's role has been set! Your gang has been created! Your followers now can use the \`g?join ${newGang.name}\` command to join your gang.`))
                   collector.stop();
