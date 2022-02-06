@@ -109,9 +109,8 @@ module.exports = {
                     newGang.role = "";
                   } else {
                     (async () => {
-                      role = await message.guild.roles.create({ data: { name: c.content, color: newGang.color, hoist: true} }).then(r => {
-                        newGang.role = r.id;
-                      });
+                      role = await message.guild.roles.create({ data: { name: c.content, color: newGang.color, hoist: true} })
+                      newGang.role = role.id;
                     })
                   }
                   msg.delete().then(async () => msg = await message.channel.send(`Gang's role has been set! Your gang has been created! Your followers now can use the \`g?join ${newGang.name}\` command to join your gang.`))
