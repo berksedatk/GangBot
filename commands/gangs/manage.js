@@ -93,13 +93,13 @@ module.exports = {
               if (!message.mentions.roles.first()) return message.error("This role doesn't exist in this server.");
               if (args[1] == '@everyone') return message.error("You can't set the role to everyone.");
               if (args[1].toLowerCase() == 'none') {
-                gang.gangRole = "";
+                gang.role = "";
                 guild.markModified('gangs');
                 guild.save().then(() => message.success(`Gang role has been cleared successfully.`)).catch(err => message.channel.send("An error occured: " + err))
               } else {
-                let gangRole = message.mentions.roles.first();
-                if (gangRole.position > message.guild.me.roles.highest.position) return message.error("The role you provided is higher than my highest role.");
-                gang.gangRole = gangRole.id;
+                let role = message.mentions.roles.first();
+                if (role.position > message.guild.me.roles.highest.position) return message.error("The role you provided is higher than my highest role.");
+                gang.role = role.id;
                 guild.markModified('gangs');
                 guild.save().then(() => message.success(`Gang role has been updated to **${gangRole.name}** successfully.`)).catch(err => message.channel.send("An error occured: " + err));
               }
