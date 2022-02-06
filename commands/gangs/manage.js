@@ -93,7 +93,7 @@ module.exports = {
               if (!message.mentions.roles.first()) return message.error("This role doesn't exist in this server.");
               if (args[1] == '@everyone') return message.error("You can't set the role to @everyone.");
               if (args[1].toLowerCase() == 'none') {
-                gang.gangRole = null;
+                gang.gangRole = "";
                 guild.markModified('gangs');
                 guild.save().then(() => message.success(`Gang role has been cleared successfully.`)).catch(err => message.channel.send("An error occured: " + err))
               } else {
