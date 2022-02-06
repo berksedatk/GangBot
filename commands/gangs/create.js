@@ -99,7 +99,7 @@ module.exports = {
                   collector.dispose(c)
                   collector.collected.delete(c.id)
                   message.error("Gang Role name length must be in between 3 and 32 characters and should not include newlines(Case sensitive).\nPlease try again or type in `cancel`.", true).then(m => m.delete({timeout: 5000}));
-                } else if (guild.roles.get(c.content)) {
+                } else if (guild.roles.cache.get(c.content)) {
                   collector.dispose(c)
                   collector.collected.delete(c.id)
                   message.error("A role with this name already exist!.\nPlease try again or type in `cancel`.", true).then(m => m.delete({timeout: 5000}));

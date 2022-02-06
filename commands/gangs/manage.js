@@ -37,6 +37,7 @@ module.exports = {
         } else if (user.gang.rank != "Owner" && user.gang.rank != "Admin") {
           return message.error("You can't manage the Gang you're in or you're not in a Gang!");
         } else {
+          if (!args[0]) return message.error("You didn't provide a true option. `name, description, color, flag, setadmin, setgangrole, removeadmin, kick, transferownership`")
           if (!guild.gangs.get(user.gang.name) && user.gang.name != 'None') {
             guild.gangs.forEach(g => {
               if (g.uuid === user.gang.uuid) user.gang.name = g.name;
@@ -46,10 +47,7 @@ module.exports = {
           let gang = guild.gangs.get(user.gang.name);
           let admins = []
           switch (args[0].toLowerCase()) {
-            case undefined:
-              return message.error("You didn't provide a true option. `name, description, color, flag, setadmin, removeadmin, kick, transferownership`");
-                break;
-              case "name":
+            case "name":
               if (!args[1]) return message.error("The gang name should be between 0 and 32 characters.\nWarning, this is capital sensitive.");
               if (args[1] == gang.name) return message.error("This is the same name as the old one! Try a new one.")
               if (args[1].length > 32 || args[1].length < 3 || args[1].includes('\n')) return message.error("The gang name should be between 0 and 32 characters and should not include new lines.\nWarning, this is capital sensitive.");
