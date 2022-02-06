@@ -89,15 +89,15 @@ module.exports = {
               }
               break;
             case "setgangrole":
-              if (!args[1]) return message.error("You didn't provide a role for the gang.");
-              if (!message.guild.roles.cache.get(args[1])) return message.error("This role doesn't exist in this server.");
+              if (!args[1] || !message.mentions.roles.first()) return message.error("You didn't provide a role for the gang.");
+              if (!message.mentions.roles.first()) return message.error("This role doesn't exist in this server.");
               if (args[1] == '@everyone') return message.error("You can't set the role to @everyone.");
               if (args[1].toLowerCase() == 'none') {
                 gang.gangRole = null;
                 guild.markModified('gangs');
                 guild.save().then(() => message.success(`Gang role has been cleared successfully.`)).catch(err => message.channel.send("An error occured: " + err))
               } else {
-                let gangRole = message.guild.roles.cache.get(args[1]);
+                let gangRole = message.mentions.roles.first();
                 if (gangRole.position > message.guild.me.roles.highest.position) return message.error("The role you provided is higher than my highest role.");
                 gang.gangRole = gangRole.id;
                 guild.markModified('gangs');
