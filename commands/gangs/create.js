@@ -108,9 +108,10 @@ module.exports = {
                   if (c.content.toLowerCase() == "skip") {
                     newGang.role = "";
                   } else {
-                    role = await message.guild.roles.create({ data: { name: c.content, color: newGang.color, hoist: true} })
+                    role = message.guild.roles.create({ data: { name: c.content, color: newGang.color, hoist: true} }).then(async r => {
+                      newGang.role = await r.id;
+                    });
                   }
-                  newGang.role = role ? role.id : "";
                   msg.delete().then(async () => msg = await message.channel.send(`Gang's role has been set! Your gang has been created! Your followers now can use the \`g?join ${newGang.name}\` command to join your gang.`))
                   collector.stop();
                   guild.gangs.set(newGang.name, newGang);
