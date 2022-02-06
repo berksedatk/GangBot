@@ -96,7 +96,7 @@ module.exports = {
               case 5:
                 //Role 
                 if (!c.mentions.roles.first() && c.content.toLowerCase() != 'skip') return message.error("You must mention a role or type in \`skip\`.\nPlease try again or type in `cancel` to exit the creator.", true).then(m => m.delete({timeout: 5000}));
-                if (!c.mentions.roles.first().name == '@everyone') return message.error("Mentioned role cannot be everyone or type in \`skip\`.\nPlease try again or type in `cancel` to exit the creator.", true).then(m => m.delete({timeout: 5000}));
+                if (c.mentions.everyone) return message.error("Mentioned role cannot be everyone or type in \`skip\`.\nPlease try again or type in `cancel` to exit the creator.", true).then(m => m.delete({timeout: 5000}));
                 if (c.content.toLowerCase() != "skip") {
                   newGang.role = c.mentions.roles.first().id;
                 }
