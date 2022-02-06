@@ -91,7 +91,7 @@ module.exports = {
             case "setgangrole":
               if (!args[1] || !message.mentions.roles.first()) return message.error("You didn't provide a role for the gang.");
               if (!message.mentions.roles.first()) return message.error("This role doesn't exist in this server.");
-              if (args[1] == '@everyone') return message.error("You can't set the role to @everyone.");
+              if (args[1] == '@everyone') return message.error("You can't set the role to everyone.");
               if (args[1].toLowerCase() == 'none') {
                 gang.gangRole = "";
                 guild.markModified('gangs');

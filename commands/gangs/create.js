@@ -90,45 +90,31 @@ module.exports = {
                   message.error("You must attach a image with your message.\nPlease try again or type in \`skip\` to skip. Type in `cancel` to cancel.", true).then(m => m.delete({timeout: 5000}))
                 } else if (c.attachments.first() || c.content.toLowerCase() == "skip") {
                   newGang.banner = c.attachments.first() ? c.attachments.first().url : null
-                  msg.delete().then(async () => msg = await message.channel.send(`Gang's banner is now set. What should be the role of this gang? Please type in the role's name that will be created or type in \`skip\`.\nType in \`cancel\` anytime to exit the creator.`));
+                  msg.delete().then(async () => msg = await message.channel.send(`Gang's banner is now set. What should be the role of this gang? Please mention the role you want to use or type in \`skip\`.\nType in \`cancel\` anytime to exit the creator.`));
                 }
               break;
               case 5:
-                //Role
-                if (c.content.length > 32 || c.content.length < 3 || c.content.includes('\n')) {
-                  collector.dispose(c)
-                  collector.collected.delete(c.id)
-                  message.error("Gang Role name length must be in between 3 and 32 characters and should not include newlines(Case sensitive).\nPlease try again or type in `cancel`.", true).then(m => m.delete({timeout: 5000}));
-                } else if (message.guild.roles.cache.get(c.content)) {
-                  collector.dispose(c)
-                  collector.collected.delete(c.id)
-                  message.error("A role with this name already exist!.\nPlease try again or type in `cancel`.", true).then(m => m.delete({timeout: 5000}));
-                } else if (c.content || c.content.toLowerCase() == "skip") {
-                  let role;
-                  if (c.content.toLowerCase() == "skip") {
-                    newGang.role = "";
-                  } else {
-                    (async () => {
-                      role = await message.guild.roles.create({ data: { name: c.content, color: newGang.color, hoist: true} })
-                      newGang.role = role.id;
-                    })
-                  }
-                  msg.delete().then(async () => msg = await message.channel.send(`Gang's role has been set! Your gang has been created! Your followers now can use the \`g?join ${newGang.name}\` command to join your gang.`))
-                  collector.stop();
-                  guild.gangs.set(newGang.name, newGang);
-                  member = {
-                    id: message.author.id,
-                    tag: message.author.tag,
-                    gang: {
-                      uuid: uuid,
-                      name: newGang.name,
-                      rank: "Owner",
-                      joinDate: Date.now()
-                    }
-                  }
-                  guild.members.set(message.author.id, member);
-                  guild.save().catch(err => console.log(`Error occured while adding a new gang: ${message.guild.id} ${err}`));
+                //Role 
+                if (!c.mentions.roles.first() && c.content.toLowerCase() != 'skip') return message.error("You must mention a role or type in \`skip\`.\nPlease try again or type in `cancel` to exit the creator.", true).then(m => m.delete({timeout: 5000}));
+                if (!c.mentions.roles.first().name == '@everyone') return message.error("Mentioned role cannot be everyone or type in \`skip\`.\nPlease try again or type in `cancel` to exit the creator.", true).then(m => m.delete({timeout: 5000}));
+                if (c.content.toLowerCase() != "skip") {
+                  newGang.role = c.mentions.roles.first().id;
                 }
+                msg.delete().then(async () => msg = await message.channel.send(`Gang's role has been set! Your gang has been created! Your followers now can use the \`g?join ${newGang.name}\` command to join your gang.`))
+                collector.stop();
+                guild.gangs.set(newGang.name, newGang);
+                member = {
+                  id: message.author.id,
+                  tag: message.author.tag,
+                  gang: {
+                    uuid: uuid,
+                    name: newGang.name,
+                    rank: "Owner",
+                    joinDate: Date.now()
+                  }
+                }
+                guild.members.set(message.author.id, member);
+                guild.save().catch(err => console.log(`Error occured while adding a new gang: ${message.guild.id} ${err}`));
                 break;
             }
           });
