@@ -30,6 +30,15 @@ module.exports = {
           }
         }
         guild.members.set(message.author.id, member);
+        if (gang.role) {
+          let gangRole = message.guild.roles.cache.get(gang.role);
+          if (gangRole) {
+            if (gangRole.position > message.guild.me.roles.highest.position) return message.error("Gang Role is higher than my current role, thus I could not asign the Gang Role to you.");
+            message.member.roles.add(gangRole);
+          } else {
+            return message.error("The Gang Role of this Gang is deleted! Please fix this issue by setting a new Gang Role for the Gang.");
+          }
+        }
         guild.save().then(() => message.success(`You successfully joined the **${gang.name}**!`)).catch(err => message.channel.send("An error occured: " + err));
       }
     });

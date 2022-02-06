@@ -90,6 +90,22 @@ module.exports = {
                 guild.save(() => message.success(`Gang banner has been updated to the image you attached successfully.`)).catch(err => message.channel.send("An error occured: " + err))
               }
               break;
+            case "setgangrole":
+              if (!args[1]) return message.error("You didn't provide a role for the gang.");
+              if (!message.guild.roles.get(args[1])) return message.error("This role doesn't exist in this server.");
+              if (args[1] == '@everyone') return message.error("You can't set the role to @everyone.");
+              if (args[1].toLowerCase() == 'none') {
+                gang.gangRole = null;
+                guild.markModified('gangs');
+                guild.save().then(() => message.success(`Gang role has been cleared successfully.`)).catch(err => message.channel.send("An error occured: " + err))
+              } else {
+                let gangRole = message.guild.roles.get(args[1])
+                if (gangRole.position > message.guild.me.roles.highest.position) return message.error("The role you provided is higher than my highest role.");
+                gang.gangRole = gangRole.id;
+                guild.markModified('gangs');
+                guild.save().then(() => message.success(`Gang role has been updated to **${gangRole.name}** successfully.`)).catch(err => message.channel.send("An error occured: " + err));
+              }
+              break;
             case "setadmin":
               if (user.gang.rank != "Owner") return message.error("Only Owner of the gang can manage this.");
               if (!message.mentions.users.first()) return message.error("You did not mention a user to set as Admin.");
