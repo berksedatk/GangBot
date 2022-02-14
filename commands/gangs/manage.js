@@ -89,7 +89,9 @@ module.exports = {
               }
               break;
             case "setgangrole":
+              if (!message.author.permissions.has("MANAGE_ROLES")) return message.error("You don't have the right permission to manage roles of this gang.");
               if (!args[1] || !message.mentions.roles.first()) return message.error("You didn't provide a role for the gang.");
+              if (message.mentions.roles.first().position >= message.author.roles.highest.position) return message.error("Your highest role is not enough to set this role as this gang's role.")
               if (!message.mentions.roles.first()) return message.error("This role doesn't exist in this server.");
               if (args[1] == '@everyone') return message.error("You can't set the role to everyone.");
               if (args[1].toLowerCase() == 'none') {
